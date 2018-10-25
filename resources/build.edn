@@ -1,0 +1,24 @@
+{:main          todo-client.core
+ :output-to     "resources/public/js/app.js"
+ :infer-externs true
+ :optimizations :advanced
+ :npm-deps      false
+ :foreign-libs  [{:file           "dist/index_bundle.js"
+                  :provides       ["create-react-class"
+                                   "react"
+                                   "material-ui.icons"
+                                   "cljsjs.react"
+                                   "cljsjs.marked"
+                                   "cljsjs.react.dom"
+                                   "material-ui.core"
+                                   "material-ui.core.styles"
+                                   "react-dom"]
+                  :global-exports {react                   React
+                                   cljsjs.react            React
+                                   react-dom               ReactDOM
+                                   cljsjs.react.dom        ReactDOM
+                                   cljsjs.marked           marked
+                                   create-react-class      CreateReactClass
+                                   material-ui.core        MaterialUI
+                                   material-ui.icons       Icons
+                                   material-ui.core.styles MaterialStyles}}]}

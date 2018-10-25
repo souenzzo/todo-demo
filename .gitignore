@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+target/
+*.iml
+node_modules/
+.nrepl-port
+figwheel_server.log
+resources/public/js/
+dist/
