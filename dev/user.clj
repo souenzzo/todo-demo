@@ -4,7 +4,8 @@
             [clojure.java.shell :as sh]
             [clojure.java.io :as io]
             [todo-common.core-test]
-            [clojure.edn :as edn]))
+            [clojure.edn :as edn]
+            [clojure.java.jdbc :as j]))
 
 (def compiler
   (-> "build.edn"
@@ -68,3 +69,11 @@
    :host     "localhost"
    :user     "postgres"
    :password "postgres"})
+
+(defn install-db-schema
+  []
+  (j/execute! (assoc server/db :dbname "")
+              "DROP DATABASE IF EXISTS app;" {:transaction? false})
+  (j/execute! (assoc server/db :dbname "")
+              "CREATE DATABASE app;" {:transaction? false})
+  (j/execute! server/db (slurp (io/resource "schema.sql"))))
