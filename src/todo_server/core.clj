@@ -49,7 +49,7 @@
   {:name  ::json
    :enter (fn [{{:keys [body request-method]} :request
                 :as            ctx}]
-            (if-not (contains? #{:post} request-method)
+            (if-not (contains? #{:post :put} request-method)
               ctx
               (let [s (slurp body)
                     data (when-not (string/blank? s)
