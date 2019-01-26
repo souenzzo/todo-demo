@@ -25,6 +25,8 @@ cd todo-demo
 lein with-profile +dev,+client,+server repl
 ```
 
+**ATENÇÃO**: Uma vez com o REPL aberto, você não deve mais fechar ele.
+
 # Roteiro
 - Brinque com EDN:
 Tente jogar em seu REPL as estruturas de dados. Qualquer valor pode ficar em qualquer lugar
@@ -32,8 +34,9 @@ sempre use o `'` no inicio da estrutura de dado
 ```clojure
 '{:chave :valor}
 '[:valor :valor]
-'
+'{[:seja] (criativo )}
 ```
+A especificação do EDN está aqui: https://github.com/edn-format/edn
 - Explicar clojure
 As listas do `edn` são interpretadas como chammadas de função. Use a função `get` para pegar valores das estruturas
 ```clojure
@@ -58,13 +61,14 @@ http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html
 ```
 Você pode ver o resultado no Postgres usando `psql -h localhost -U postgres` no terminal
 - usar handler HTTP para fazer query no database
-Vá para o namespace `todo-server.core` e chame manualmente os handlers http
+Vá para o namespace `todo-server.core` usando `in-ns` e chame manualmente os handlers http
 Edite o status da `list-todo` para retornar 201
 Caso seu editor de texto não tenha operação de "enviar para o repl", vc pode usar a primitiva `load`
 Recomendo fortemente usar um editor com suporte a reload nativo
 ```
 (in-ns 'todo-server.core)
 (list-todo {}) ;; deve retornar 200
+;; no arquivo src/todo_server/core.clj, usando qualquer editor.
 ;; edite para 201
 (load "core")
 (list-todo {}) ;; deve retornar 201
@@ -77,8 +81,9 @@ Recomendo fortemente usar um editor com suporte a reload nativo
 - editar handler HTTP
 - fazer CURL
 - Iniciar build cljs
-- Mostrar site
-- Mostrar cards
+`(user/start)`
+- Mostrar site `http://localhost:3449`
+- Mostrar cards `http://localhost:3449/cards.html`
 - Mostrar teste via cards
 - Reload no cards
 - Mostrar teste via JVM
