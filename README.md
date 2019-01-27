@@ -68,9 +68,9 @@ Recomendo fortemente usar um editor com suporte a reload nativo
 ```
 (in-ns 'todo-server.core)
 (list-todo {}) ;; deve retornar 200
-;; no arquivo src/todo_server/core.clj, usando qualquer editor.
-;; edite para 201
-(load "core")
+;; no arquivo src/todo_server/core.clj, usando qualquer editor, linha 20.
+;; edite de 200 para 201
+(load "core") ;; load irá recarregar o arquivo para o REPL
 (list-todo {}) ;; deve retornar 201
 ```
 
