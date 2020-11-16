@@ -3,26 +3,35 @@ Roteiro de uma apresentação interativa que fiz.
 Sinta-se livre para fazer PR's corrigindo os todo's.
 
 # Setup
-Antes de começar, instale o `lein`.
-http://leiningen.org/
-Recomendo usar `jvm8` para evitar problemas de compatibilidade
+Antes de começar, instale o `clojure`.
+- https://clojure.org/guides/getting_started
 ```bash
-lein version
-Leiningen 2.8.1 on Java 1.8.0_192 OpenJDK 64-Bit Server VM
+clj -Sdescribe
+{:version "1.10.1.727"
+ :config-files ["/usr/share/clojure/deps.edn" "/home/souenzzo/.clojure/deps.edn" "deps.edn" ]
+ :config-user "/home/souenzzo/.clojure/deps.edn"
+ :config-project "deps.edn"
+ :install-dir "/usr/share/clojure"
+ :config-dir "/home/souenzzo/.clojure"
+ :cache-dir ".cpcache"
+ :force false
+ :repro false
+ :main-aliases ""
+ :repl-aliases ""}
 ```
 Suba um banco Postgres com usuario/senha Postgres. Exemplo em docker
 ```bash
-docker run -p 5432:5432 postgres:alpine
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:alpine
 ```
-Clone o projeto, entre na pasta e abra o repl do lein.
+Clone o projeto, entre na pasta e abra o repl do clojure.
 Recomendado uso de um repl integrado ao editor de texto.
-TODO: Configurar project.clj para lein repl usar rebel-readline
+TODO: Configurar repl usar rebel-readline
 TODO: Configurar deps.clj
 https://github.com/bhauman/rebel-readline (Fazer PR por favor)
 ```bash
 git clone https://github.com/souenzzo/todo-demo.git
 cd todo-demo
-lein with-profile +dev,+client,+server repl
+clj -A:cljs:dev
 ```
 
 **ATENÇÃO**: Uma vez com o REPL aberto, você não deve mais fechar ele.
