@@ -1,6 +1,5 @@
 (ns user
   (:require [todo-server.core :as server]
-            [figwheel-sidecar.repl-api :as f]
             [clojure.java.shell :as sh]
             [clojure.java.io :as io]
             [todo-common.core-test]
@@ -43,21 +42,21 @@
   (time
     (do (sh/sh "yarn" "install")
         (sh/sh "yarn" "webpack")
-        (f/start-figwheel! {:builds          [card-build
-                                              dev-build]
-                            :builds-to-start ["dev" "card"]}))))
+        #_(f/start-figwheel! {:builds          [card-build
+                                                dev-build]
+                              :builds-to-start ["dev" "card"]}))))
 
 (defn dev-repl
   []
-  (f/cljs-repl "dev"))
+  #_(f/cljs-repl "dev"))
 
 (defn card-repl
   []
-  (f/cljs-repl "card"))
+  #_(f/cljs-repl "card"))
 
 (defn stop
   []
-  (f/stop-figwheel!))
+  #_(f/stop-figwheel!))
 
 (defn restart
   []

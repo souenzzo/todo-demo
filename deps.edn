@@ -1,16 +1,17 @@
 {:paths   ["src" "resources"]
- :deps    {org.clojure/clojure          {:mvn/version "1.10.0"}
-           io.pedestal/pedestal.jetty   {:mvn/version "0.5.5"}
-           io.pedestal/pedestal.service {:mvn/version "0.5.5"}
+ :deps    {org.clojure/clojure          {:mvn/version "1.10.1"}
+           io.pedestal/pedestal.jetty   {:mvn/version "0.5.8"}
+           io.pedestal/pedestal.service {:mvn/version "0.5.8"}
            org.clojure/java.jdbc        {:mvn/version "0.7.8"}
-           org.postgresql/postgresql    {:mvn/version "42.2.5"}
+           seancorfield/next.jdbc       {:mvn/version "1.1.569"}
+           org.postgresql/postgresql    {:mvn/version "42.2.18"}
            ;; ignore logging
-           org.slf4j/slf4j-nop          {:mvn/version "1.8.0-beta2"}}
- :aliases {:cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.439"}
-                               reagent/reagent           {:mvn/version "0.8.1"}}}
-           :dev  {:extra-paths ["dev" "test"]
-                  :extra-deps  {figwheel-sidecar/figwheel-sidecar {:mvn/version "0.5.18"}
-                                cider/piggieback                  {:mvn/version "0.3.10"}
-                                midje/midje                       {:mvn/version "1.9.6"}
-                                devcards/devcards                 {:mvn/version "0.2.6"}
-                                org.clojure/test.check            {:mvn/version "0.10.0-alpha3"}}}}}
+           org.slf4j/slf4j-nop          {:mvn/version "2.0.0-alpha1"}}
+ :aliases {:cljs      {:extra-deps {org.clojure/clojurescript {:mvn/version "1.10.773"}
+                                    reagent/reagent           {:mvn/version "1.0.0-alpha2"}}}
+           :cljsbuild {:extra-deps {thheller/shadow-cljs {:mvn/version "2.11.7"}}}
+           :dev       {:extra-paths ["dev" "test"]
+                       :extra-deps  {thheller/shadow-cljs   {:mvn/version "2.11.7"}
+                                     nubank/workspaces      {:mvn/version "1.0.15"}
+                                     midje/midje            {:mvn/version "1.9.6"}
+                                     org.clojure/test.check {:mvn/version "0.10.0-alpha3"}}}}}

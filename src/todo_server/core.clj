@@ -1,9 +1,10 @@
 (ns todo-server.core
   (:require [io.pedestal.http :as http]
             [clojure.data.json :as json]
-            [clojure.java.jdbc :as j]
+            [next.jdbc :as j]
             [clojure.string :as string]
-            [io.pedestal.http.route :as route]))
+            [io.pedestal.http.route :as route]
+            [clojure.edn :as edn]))
 
 (def db
   {:dbtype   "postgresql"
@@ -14,41 +15,51 @@
 
 (defn list-todo
   [_]
-  {:body   (for [{:keys [id data]} (j/query db "SELECT * FROM todo")]
+  {:body   (for [{:todo/keys [id data]} (j/execute! db
+                                                    ["SELECT * FROM todo"])]
              {:todo/text data
               :todo/id   id})
    :status 200})
 
 (defn create-todo
   [{{:keys [todo/text]} :params}]
-  (let [{:keys [data id]} (first (j/insert! db :todo {:todo/data text}))]
+  (let [{:todo/keys [data id]} (first (j/execute! db
+                                                  ["INSERT INTO todo(data) VALUES (?) RETURNING *"
+                                                   text]))]
     {:body   {:todo/text data
               :todo/id   id}
      :status 201}))
 
 (defn get-todo
   [{{:keys [id]} :path-params}]
-  (let [{:keys [id data]} (first (j/query db ["SELECT * FROM todo WHERE id = ?" (bigint id)]))]
-    {:body   {:todo/text data
-              :todo/id   id}
-     :status 200}))
+  (let [{:todo/keys [id data]} (first (j/execute! db
+                                                  ["SELECT * FROM todo WHERE id = ?"
+                                                   (edn/read-string id)]))]
+    (when id
+      {:body   {:todo/text data
+                :todo/id   id}
+       :status 200})))
 
 (defn update-todo
   [{{:keys [id]}        :path-params
     {:keys [todo/text]} :params
     :as                 req}]
-  (j/update! db :todo {:data text} ["id = ?" (bigint id)])
+  (j/execute! db
+              ["UPDATE todo SET data = ? WHERE id = ?"
+               text (edn/read-string id)])
   (get-todo req))
 
 (defn delete-todo
   [{{:keys [id]} :path-params}]
-  (j/delete! db :todo ["id = ?" (bigint id)])
+  (j/execute! db
+              ["DELETE FROM todo WHERE id = ?"
+               (edn/read-string id)])
   {:status 204})
 
 (def ->json
   {:name  ::json
    :enter (fn [{{:keys [body request-method]} :request
-                :as            ctx}]
+                :as                           ctx}]
             (if-not (contains? #{:post :put} request-method)
               ctx
               (let [s (slurp body)
