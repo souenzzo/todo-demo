@@ -1,7 +1,5 @@
-(ns cljs.user
-  (:require [todo-common.core-test]
-            [todo-client.cards]
-            [goog.dom :as gdom]
+(ns todo-client.dev
+  (:require [goog.dom :as gdom]
             [todo-client.core :as client]))
 
 (defn on-jsload

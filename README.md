@@ -59,14 +59,16 @@ Digite apenas `db` no repl para ver o valor da variavel `db`, já preparada
 ```clojure
 (install-db-schema)
 db
-(j/query db "SELECT * FROM todo")
+(j/execute! db ["SELECT * FROM todo"])
+(j/execute! db ["INSERT INTO todo (data) VALUES(?)" "Olá mundo!"])
+(j/execute! db ["SELECT * FROM todo"])
 ```
 - Fazer insert no database
 Insira dads no db, faça outras operações
 a API do JDBC está aqui
 http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html
 ```clojure
-(j/insert! db :todo {:data "abc123"})
+(j/execute! db ["SELECT * FROM todo"])
 ```
 Você pode ver o resultado no Postgres usando `psql -h localhost -U postgres` no terminal
 - usar handler HTTP para fazer query no database
@@ -79,7 +81,7 @@ Recomendo fortemente usar um editor com suporte a reload nativo
 (list-todo {}) ;; deve retornar 200
 ;; no arquivo src/todo_server/core.clj, usando qualquer editor, linha 20.
 ;; edite de 200 para 201
-(load "core") ;; load irá recarregar o arquivo para o REPL
+(require 'todo-server.core :reload) ;; Esse comando irá recarregar este arquivo no REPL
 (list-todo {}) ;; deve retornar 201
 ```
 

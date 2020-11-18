@@ -1,7 +1,7 @@
 {:deps   true
- :builds {:web {:target           :browser
-                :output-dir       "target/web"
-                :asset-path       "/web"
-                :modules          {:main {:entries [todo-client.core]}}
-                :devtools         {:preloads   [todo-client.dev]
-                                   :after-load todo-client.core/after-load}}}}
+ :builds {:web {:target     :browser
+                :output-dir "target/web"
+                :asset-path "/web"
+                :modules    {:main {:entries [todo-client.core]}}
+                :devtools   {:preloads   [todo-client.dev]
+                             :after-load todo-client.core/after-load}}}}

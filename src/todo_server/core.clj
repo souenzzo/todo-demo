@@ -81,6 +81,8 @@
        ::http/port              8080
        ::http/join?             false
        ::http/type              :jetty
+       ::http/resource-path     "public"
+       ::http/file-path         "target"
        ::http/allowed-origins   {:creds           true
                                  :allowed-origins (constantly true)}
        ::http/container-options {:h2c? true}

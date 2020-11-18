@@ -1,8 +1,9 @@
 (ns todo-client.core
   (:refer-clojure :exclude [List])
-  (:require [material-ui.core :as m]
+  (:require ["@material-ui/core" :as m]
             [todo-common.core :refer [index-by]]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [reagent.dom :as rd]))
 
 (def Button (r/adapt-react-class m/Button))
 (def Select (r/adapt-react-class m/Select))
@@ -23,7 +24,10 @@
                         (let [{:keys [method]} opts]
                           (cond-> opts
                                   true (dissoc :url)
-                                  true (update :body clj->js :keyword-fn #(.-fqn %))
+                                  true (update :body clj->js :keyword-fn #(str
+                                                                            (namespace %)
+                                                                            "/"
+                                                                            (name %)))
                                   true (update :body js/JSON.stringify)
                                   (nil? method) (assoc opts :method "GET")
                                   (contains? #{"GET" "HEAD"} method) (dissoc :body))))
@@ -112,7 +116,7 @@
 
 (defn render
   [target]
-  (r/render [view] target))
+  (rd/render [view] target))
 
 (defn ^:export main
   [target]
