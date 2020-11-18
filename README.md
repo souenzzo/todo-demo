@@ -60,14 +60,13 @@ Digite apenas `db` no repl para ver o valor da variavel `db`, já preparada
 (install-db-schema)
 db
 (j/execute! db ["SELECT * FROM todo"])
-(j/execute! db ["INSERT INTO todo (data) VALUES(?)" "Olá mundo!"])
-(j/execute! db ["SELECT * FROM todo"])
 ```
 - Fazer insert no database
 Insira dads no db, faça outras operações
 a API do JDBC está aqui
 http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html
 ```clojure
+(j/execute! db ["INSERT INTO todo (data) VALUES(?)" "Olá mundo!"])
 (j/execute! db ["SELECT * FROM todo"])
 ```
 Você pode ver o resultado no Postgres usando `psql -h localhost -U postgres` no terminal
@@ -79,16 +78,24 @@ Recomendo fortemente usar um editor com suporte a reload nativo
 ```
 (in-ns 'todo-server.core)
 (list-todo {}) ;; deve retornar 200
-;; no arquivo src/todo_server/core.clj, usando qualquer editor, linha 20.
-;; edite de 200 para 201
+;; no arquivo src/todo_server/core.clj, usando qualquer editor, linha 22.
+;; edite de `:status 200` para `:status 201`
 (require 'todo-server.core :reload) ;; Esse comando irá recarregar este arquivo no REPL
 (list-todo {}) ;; deve retornar 201
 ```
 
 - subir servidor HTTP
+Agora vamos subir o servidor HTTP. Você pode ver proximo da linha 73 suas rodas
 `(-main)`
-- fazer CURL
-`curl localhost:8080`
+- fazer CURL/POSTMAN
+Usando o cliente HTTP  de sua preferencia (meus exemplos serão em `curl`, mas muita gente usa o POSTMAN), 
+faça um `GET` na porta `8080` com o caminho `/todos`
+```bash
+curl localhost:8080/todo
+[{"todo\/text":"Ol\u00e1 mundo!","todo\/id":1}]
+```
+
+Obtemos o resultado como esperado
 - editar handler HTTP
 - fazer CURL
 - Iniciar build cljs
